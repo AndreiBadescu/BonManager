@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "730055602311",
+    "project_id": "bon-manager-app",
+    "storage_bucket": "bon-manager-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730055602311:android:981dc42a6faab055174822",
+        "android_client_info": {
+          "package_name": "com.bonmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730055602311-de0uvqkvjupokg2kfrcasnnjcan54e3v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcR2J15S7cSeF2GGQ6khBV2I8Bwe3haCQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730055602311-de0uvqkvjupokg2kfrcasnnjcan54e3v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
