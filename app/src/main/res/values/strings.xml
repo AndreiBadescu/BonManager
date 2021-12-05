@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="add_image">Add image to process</string>
+    <string name="image_of_receipt">Image of receipt</string>
 </resources>
