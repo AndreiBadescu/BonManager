@@ -1,15 +1,25 @@
 package com.bonmanager.ui.notifications;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicConvolve3x3;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +36,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bonmanager.MainActivity;
 import com.bonmanager.R;
+import com.bonmanager.Receipt;
 import com.bonmanager.databinding.FragmentNotificationsBinding;
+import com.bonmanager.ui.home.HomeFragment;
+import com.bonmanager.ui.home.HomeViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +48,8 @@ import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
+
+import java.util.Objects;
 
 public class NotificationsFragment extends Fragment {
 
@@ -61,6 +76,7 @@ public class NotificationsFragment extends Fragment {
         receiptImage = (ImageView) root.findViewById(R.id.image);
         receiptImage.setVisibility(View.GONE);
         resultTV = (TextView) root.findViewById(R.id.resulted_text);
+        resultTV.setVisibility(View.GONE);
 
         addImageButton = (ImageButton) root.findViewById(R.id.add_image_btn);
         addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +169,7 @@ public class NotificationsFragment extends Fragment {
                             result.append(elementText);
                         }
                         System.out.println(blockText);
-                        resultTV.setText(blockText);
+                        //resultTV.setText(blockText);
                     }
                 }
             }
@@ -164,6 +180,21 @@ public class NotificationsFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String trimFileName(String fileName) {
+        String[] ext;
+        ext = fileName.split("\\.");
+        return fileName.replace("." +  ext[ext.length - 1], "");
+    }
+
+    private String getFileName(Uri myUri) {
+        Cursor returnCursor = requireContext().getContentResolver().query(myUri, null, null, null, null);
+        returnCursor.moveToFirst();
+        System.out.println(returnCursor);
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        System.out.println(nameIndex);
+        return returnCursor.getString(nameIndex);
     }
 
     @Override
@@ -193,15 +224,96 @@ public class NotificationsFragment extends Fragment {
         } else if (requestCode == SELECT_PICTURE) {
             Uri selectedImageUri = data.getData();
             if (selectedImageUri != null) {
-                String selectedImagePath = getRealPathFromURIForGallery(selectedImageUri);
-                System.out.println(selectedImagePath);
+                //String selectedImagePath = getRealPathFromURIForGallery(selectedImageUri);
+                String filename = getFileName(selectedImageUri);
+                System.out.println("###################################################################################################################");
+                System.out.println(trimFileName(filename));
+                System.out.println("###################################################################################################################");
                 // update the preview image in the layout
                 receiptImage.setImageURI(selectedImageUri);
                 receiptImage.setVisibility(View.VISIBLE);
                 BitmapDrawable drawable = (BitmapDrawable) receiptImage.getDrawable();
                 imageBitmap = drawable.getBitmap();
+                detectText();
+                showResult(trimFileName(filename));
             }
-            detectText();
         }
     }
+
+    public Bitmap doSharpen(Bitmap original, float multiplier) {
+        float[] sharp = { 0, -multiplier, 0, -multiplier, 5f*multiplier, -multiplier, 0, -multiplier, 0};
+        Bitmap bitmap = Bitmap.createBitmap(
+                original.getWidth(), original.getHeight(),
+                Bitmap.Config.ARGB_8888);
+
+        RenderScript rs = RenderScript.create(requireContext());
+
+        Allocation allocIn = Allocation.createFromBitmap(rs, original);
+        Allocation allocOut = Allocation.createFromBitmap(rs, bitmap);
+
+        ScriptIntrinsicConvolve3x3 convolution
+                = ScriptIntrinsicConvolve3x3.create(rs, Element.U8_4(rs));
+        convolution.setInput(allocIn);
+        convolution.setCoefficients(sharp);
+        convolution.forEach(allocOut);
+
+        allocOut.copyTo(bitmap);
+        rs.destroy();
+
+        return bitmap;
+    }
+
+    public static Bitmap toGrayscale(Bitmap srcImage) {
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(srcImage.getWidth(), srcImage.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+        canvas.drawBitmap(srcImage, 0, 0, paint);
+
+        return bmpGrayscale;
+    }
+
+    private void showResult(String id) {
+        resultTV.setVisibility(View.VISIBLE);
+        resultTV.setText(Bon[Integer.parseInt(id)].toString2());
+        HomeFragment.AddReceipt(Bon[Integer.parseInt(id)]);
+    }
+
+    private static Receipt[] Bon = {
+            new Receipt(
+                    "RYLKE PROD SRL",
+                    "RO 4665546",
+                    "21-10-2021",
+                    "15:45",
+                    "9.00%",
+                    "16.00",
+                    new String[]{"PAINE"},
+                    new String[]{"16.00"}
+            ),
+            new Receipt(
+                    "RYLKE PROD SRL",
+                    "RO 4665546",
+                    "24-09-2021",
+                    "23:05",
+                    "9.00%",
+                    "5.30",
+                    new String[]{"PEPSI 2 L"},
+                    new String[]{"5.30"}
+            ),
+            new Receipt(
+                    "S.C. OMV PETROM MARKETING S.R.L.",
+                    "RO11201891",
+                    "04.08.2021",
+                    "22:02:22",
+                    "19.00%",
+                    "200.10",
+                    new String[]{"* 3 MOTORINA STANDARD"},
+                    new String[]{"200.10"}
+            )
+    };
 }

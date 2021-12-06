@@ -13,12 +13,20 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bonmanager.R;
+import com.bonmanager.Receipt;
 import com.bonmanager.databinding.FragmentHomeBinding;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
+    private TextView test;
+    private static List<Receipt> receipts = new ArrayList<Receipt>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,13 +36,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        test = (TextView) root.findViewById(R.id.text_home);
+        if (!receipts.isEmpty()) {
+            test.setText(receipts.toString());
+        }
+
         return root;
     }
 
@@ -42,5 +48,13 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public static void AddReceipt(Receipt bon) {
+        receipts.add(bon);
+    }
+
+    public static void debugShow() {
+
     }
 }
