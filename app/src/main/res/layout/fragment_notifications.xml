@@ -6,17 +6,68 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment">
 
-    <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <!--android:layout_margin="16dp"-->
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="380dp"
+        android:layout_height="370dp"
+        android:scaleType="fitXY"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:contentDescription="@string/image_of_receipt"
+        android:background="@drawable/image_border"/>
+
+    <TextView
+        android:id="@+id/resulted_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/image"
+        android:layout_marginTop="310dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/add_image_btn"
+        android:maxWidth="45dp"
+        android:maxHeight="45dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/plus_btn"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"/>
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/select_image_from_gallery"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="65dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/gallery"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

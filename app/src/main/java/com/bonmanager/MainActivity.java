@@ -4,16 +4,33 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicConvolve3x3;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,20 +38,24 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bonmanager.databinding.ActivityMainBinding;
-
-import java.io.File;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-    private ImageButton addImageButton;
+/*    private ImageButton addImageButton;
     private ImageButton selectImageFromGalleyButton;
     private ImageView receiptImage;
     private Bitmap imageBitmap;
+    private TextView resultTV;*/
 
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+/*    private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int PICK_IMAGE = 5;
-    private static int SELECT_PICTURE = 200;
+    private static int SELECT_PICTURE = 200;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +74,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        receiptImage = (ImageView) findViewById(R.id.image);
+/*        receiptImage = (ImageView) findViewById(R.id.image);
+        resultTV = (TextView) findViewById(R.id.resulted_text);
 
         addImageButton = (ImageButton) findViewById(R.id.add_image_btn);
         addImageButton.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +91,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 dispatchSelectImageFromGalleryIntent();
             }
-        });
+        });*/
     }
 
-    private void dispatchTakePictureIntent() {
+/*    private void dispatchTakePictureIntent() {
         // in the method we are displaying an intent to capture our image.
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -125,14 +147,100 @@ public class MainActivity extends AppCompatActivity {
             // below line is to set the
             // image bitmap to our image.
             receiptImage.setImageBitmap(imageBitmap);
-        } else if (requestCode == PICK_IMAGE || requestCode == SELECT_PICTURE) {
+            detectText();
+        } else if (requestCode == PICK_IMAGE) {
+            Uri selectedImageUri = data.getData();
+            String selectedImagePath = getRealPathFromURIForGallery(selectedImageUri);
+            System.out.println(selectedImagePath);
+            imageBitmap = (Bitmap) BitmapFactory.decodeFile(selectedImagePath);
+            receiptImage.setImageBitmap(imageBitmap);
+            detectText();
+        } else if (requestCode == SELECT_PICTURE) {
             Uri selectedImageUri = data.getData();
             if (selectedImageUri != null) {
                 String selectedImagePath = getRealPathFromURIForGallery(selectedImageUri);
                 System.out.println(selectedImagePath);
-                imageBitmap = (Bitmap) BitmapFactory.decodeFile(selectedImagePath);
-                receiptImage.setImageBitmap(imageBitmap);
+                // update the preview image in the layout
+                receiptImage.setImageURI(selectedImageUri);
+                BitmapDrawable drawable = (BitmapDrawable) receiptImage.getDrawable();
+                imageBitmap = drawable.getBitmap();
             }
+            detectText();
         }
     }
+
+    private void detectText() {
+        imageBitmap = toGrayscale(imageBitmap);
+        //imageBitmap = doSharpen(imageBitmap, 1.0f);
+        receiptImage.setImageBitmap(imageBitmap);
+        System.out.println(imageBitmap);
+        InputImage image = InputImage.fromBitmap(imageBitmap, 0);
+        TextRecognizer recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
+        Task<Text> result = recognizer.process(image).addOnSuccessListener(new OnSuccessListener<Text>() {
+            @Override
+            public void onSuccess(@NonNull Text text) {
+                StringBuilder result = new StringBuilder();
+                for (Text.TextBlock block : text.getTextBlocks()) {
+                    String blockText = block.getText();
+                    Point[] blockCounterPoint = block.getCornerPoints();
+                    Rect blockFrame = block.getBoundingBox();
+                    for (Text.Line line: block.getLines()) {
+                        String lineText = line.getText();
+                        Point[] lineCornerPoint = line.getCornerPoints();
+                        Rect lineRect = line.getBoundingBox();
+                        for (Text.Element element: line.getElements()) {
+                            String elementText = element.getText();
+                            result.append(elementText);
+                        }
+                        System.out.println(blockText);
+                        resultTV.setText(blockText);
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "Failed to detect text from image: " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public Bitmap doSharpen(Bitmap original, float multiplier) {
+        float[] sharp = { 0, -multiplier, 0, -multiplier, 5f*multiplier, -multiplier, 0, -multiplier, 0};
+        Bitmap bitmap = Bitmap.createBitmap(
+                original.getWidth(), original.getHeight(),
+                Bitmap.Config.ARGB_8888);
+
+        RenderScript rs = RenderScript.create(MainActivity.this);
+
+        Allocation allocIn = Allocation.createFromBitmap(rs, original);
+        Allocation allocOut = Allocation.createFromBitmap(rs, bitmap);
+
+        ScriptIntrinsicConvolve3x3 convolution
+                = ScriptIntrinsicConvolve3x3.create(rs, Element.U8_4(rs));
+        convolution.setInput(allocIn);
+        convolution.setCoefficients(sharp);
+        convolution.forEach(allocOut);
+
+        allocOut.copyTo(bitmap);
+        rs.destroy();
+
+        return bitmap;
+    }
+
+    public static Bitmap toGrayscale(Bitmap srcImage) {
+
+        Bitmap bmpGrayscale = Bitmap.createBitmap(srcImage.getWidth(), srcImage.getHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(bmpGrayscale);
+        Paint paint = new Paint();
+
+        ColorMatrix cm = new ColorMatrix();
+        cm.setSaturation(0);
+        paint.setColorFilter(new ColorMatrixColorFilter(cm));
+        canvas.drawBitmap(srcImage, 0, 0, paint);
+
+        return bmpGrayscale;
+    }*/
 }

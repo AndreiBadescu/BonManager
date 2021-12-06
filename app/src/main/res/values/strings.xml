@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BonManager</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Statistics</string>
+    <string name="title_notifications">New Receipt</string>
     <string name="add_image">Add image to process</string>
     <string name="image_of_receipt">Image of receipt</string>
 </resources>
