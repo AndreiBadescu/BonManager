@@ -23,6 +23,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicConvolve3x3;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -52,6 +53,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -63,19 +65,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MainActivity.this;
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        setContentView(R.layout.activity_login);
     }
 
     public static void SaveArrayList(List<Receipt> listArray){
@@ -97,5 +87,33 @@ public class MainActivity extends AppCompatActivity {
             return new ArrayList<>();
         }
         return gson.fromJson(json, listType);
+    }
+
+    public void changelayout(View view){
+        EditText usernameET = (EditText) findViewById(R.id.username);
+        EditText passwordET = (EditText) findViewById(R.id.password);
+        String username = usernameET.getText().toString().toLowerCase();
+        String password = passwordET.getText().toString();
+/*        System.out.println(username);
+        System.out.println(password);*/
+        if (!username.contains("andrei")) {
+            return;
+        }
+        if (!password.equals("admin")) {
+            return;
+        }
+
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                .build();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        NavigationUI.setupWithNavController(binding.navView, navController);
     }
 }

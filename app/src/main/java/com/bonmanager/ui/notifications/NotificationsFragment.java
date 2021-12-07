@@ -232,9 +232,9 @@ public class NotificationsFragment extends Fragment {
             if (selectedImageUri != null) {
                 //String selectedImagePath = getRealPathFromURIForGallery(selectedImageUri);
                 String filename = getFileName(selectedImageUri);
-                System.out.println("###################################################################################################################");
+/*                System.out.println("###################################################################################################################");
                 System.out.println(trimFileName(filename));
-                System.out.println("###################################################################################################################");
+                System.out.println("###################################################################################################################");*/
                 // update the preview image in the layout
                 receiptImage.setImageURI(selectedImageUri);
                 receiptImage.setVisibility(View.VISIBLE);
