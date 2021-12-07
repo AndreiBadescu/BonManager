@@ -12,11 +12,11 @@
 
             <ImageView
                 android:id="@+id/receipt_icon_list"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
-                android:src="@drawable/receipt_home_view"
-                android:layout_alignParentStart="true"/>
+                android:src="@drawable/receipt_home_view" />
 
 
             <LinearLayout
@@ -24,15 +24,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:orientation="vertical"
-                android:layout_centerInParent="true">
+                android:layout_centerVertical="true"
+                android:paddingStart="90dp">
 
                 <TextView
-                    android:id="@+id/personName"
+                    android:id="@+id/total_list"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 RON"
                     android:textColor="@color/black"
-                    android:textSize="25sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -40,13 +41,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textSize="16sp"
+                    android:textSize="12sp"
+                    android:gravity="start"
                     android:text="NUME COMERCIANT"/>
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/receipt_date"
+                android:id="@+id/receipt_date_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -54,7 +56,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:text="0/0/2021"
-                android:textSize="16sp"/>
+                android:textSize="14sp"/>
 
         </RelativeLayout>
 

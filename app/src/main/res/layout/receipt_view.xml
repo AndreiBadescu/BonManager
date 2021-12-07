@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserActivity">
+    tools:context=".ReceiptActivity">
 
     <ImageView
         android:id="@+id/profile_image"
@@ -21,7 +21,7 @@
         android:clickable="true"
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
-        android:paddingVertical="10dp"
+        android:paddingVertical="5dp"
         android:layout_marginTop="130dp">
 
         <LinearLayout
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/nume_comerciant_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
 
         <LinearLayout
@@ -89,7 +89,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/total_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -124,7 +124,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/cif_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -159,7 +159,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/data_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -194,7 +194,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/ora_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -205,7 +205,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tva"
+                android:text="TVA"
                 android:textSize="15sp"/>
 
             <TextView
@@ -229,7 +229,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/tva_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -264,7 +264,7 @@
         android:focusable="true"
         android:background="?attr/selectableItemBackground"
         android:layout_below="@id/produse_view_item"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"

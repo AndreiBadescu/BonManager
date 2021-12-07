@@ -3,14 +3,16 @@ package com.bonmanager;
 import java.util.Arrays;
 
 public class Receipt {
-    String numeComerciant;
-    String cif;
-    String data;
-    String ora;
-    String tva;
-    String total;
-    String[] produse;
-    String[] preturi;
+    private String numeComerciant;
+    private String cif;
+    private String data;
+    private String ora;
+    private String tva;
+    private String total;
+    private String[] produse;
+    private String[] preturi;
+    private int id;
+    static int last_id = 0;
 
     @Override
     public String toString() {
@@ -101,6 +103,14 @@ public class Receipt {
         this.preturi = preturi;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public Receipt(String numeComerciant, String cif, String data, String ora, String tva, String total, String[] produse, String[] preturi) {
         this.numeComerciant = numeComerciant;
         this.cif = cif;
@@ -110,5 +120,7 @@ public class Receipt {
         this.total = total;
         this.produse = produse;
         this.preturi = preturi;
+        this.id = last_id++;
+        System.out.println(last_id);
     }
 }
