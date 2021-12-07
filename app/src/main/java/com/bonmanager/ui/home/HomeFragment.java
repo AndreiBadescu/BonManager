@@ -76,4 +76,8 @@ public class HomeFragment extends Fragment {
     public static void AddReceipt(Receipt bon) {
         receipts.add(bon);
     }
+
+    public static List<Receipt> getReceipts() {
+        return receipts;
+    }
 }

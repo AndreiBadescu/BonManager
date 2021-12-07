@@ -30,13 +30,13 @@ public class Receipt {
 
     public String toString2() {
         return  "    Nume comerciant: " + numeComerciant +
-                "\n    CIF:                            " + cif +
-                "\n    Data:                          " + data +
-                "\n    Ora:                            " + ora +
-                "\n    TVA:                           " + tva +
-                "\n    Total:                          " + total +
-                "\n    Produse:                    " + Arrays.toString(produse) +
-                "\n    Preturi:                       " + Arrays.toString(preturi);
+                "\n    CIF: " + cif +
+                "\n    Data: " + data +
+                "\n    Ora: " + ora +
+                "\n    TVA: " + tva +
+                "\n    Total: " + total +
+                "\n    Produse: " + Arrays.toString(produse) +
+                "\n    Preturi: " + Arrays.toString(preturi);
     }
 
     public String getNumeComerciant() {

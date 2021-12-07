@@ -21,7 +21,6 @@ import java.util.List;
 
 public class ListAdapter extends ArrayAdapter<Receipt> {
 
-
     public ListAdapter(Context context, List<Receipt> receipts){
         super(context, R.layout.list_item, receipts);
     }

@@ -314,6 +314,16 @@ public class NotificationsFragment extends Fragment {
                     "200.10",
                     new String[]{"* 3 MOTORINA STANDARD"},
                     new String[]{"200.10"}
+            ),
+            new Receipt(
+                    "SUCCES DEZVOLTARE 1991 SRL",
+                    "RO33030628",
+                    "02-12-2021",
+                    "12:08",
+                    "19%",
+                    "14.75",
+                    new String[]{"AQUATIQUE 5L APA PLATA", "FAIRY EXT PLUS LILAC"},
+                    new String[]{"5.75", "9.00"}
             )
     };
 }
