@@ -1,7 +1,10 @@
 package com.bonmanager.ui.home;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +17,17 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bonmanager.MainActivity;
 import com.bonmanager.R;
 import com.bonmanager.Receipt;
 import com.bonmanager.ReceiptActivity;
 import com.bonmanager.databinding.FragmentHomeBinding;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,7 +37,8 @@ public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private TextView test;
-    private static List<Receipt> receipts = new ArrayList<Receipt>();
+    private static List<Receipt> receipts = MainActivity.getArrayList();
+    private static Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        context = requireContext();
 
 /*        test = (TextView) root.findViewById(R.id.text_home);*/
         if (!receipts.isEmpty()) {
@@ -75,6 +84,7 @@ public class HomeFragment extends Fragment {
 
     public static void AddReceipt(Receipt bon) {
         receipts.add(bon);
+        MainActivity.SaveArrayList(receipts);
     }
 
     public static List<Receipt> getReceipts() {

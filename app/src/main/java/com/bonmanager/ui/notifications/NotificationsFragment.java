@@ -2,6 +2,7 @@ package com.bonmanager.ui.notifications;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,7 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.renderscript.Allocation;
@@ -43,12 +45,16 @@ import com.bonmanager.ui.home.HomeViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.mlkit.vision.common.InputImage;
 import com.google.mlkit.vision.text.Text;
 import com.google.mlkit.vision.text.TextRecognition;
 import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class NotificationsFragment extends Fragment {
@@ -282,48 +288,5 @@ public class NotificationsFragment extends Fragment {
         resultTV.setVisibility(View.VISIBLE);
         resultTV.setText(Bon[Integer.parseInt(id)].toString2());
         HomeFragment.AddReceipt(Bon[Integer.parseInt(id)]);
-    }
-
-    private static Receipt[] Bon = {
-            new Receipt(
-                    "RYLKE PROD SRL",
-                    "RO 4665546",
-                    "21-10-2021",
-                    "15:45",
-                    "9.00%",
-                    "16.00",
-                    new String[]{"PAINE"},
-                    new String[]{"16.00"}
-            ),
-            new Receipt(
-                    "RYLKE PROD SRL",
-                    "RO 4665546",
-                    "24-09-2021",
-                    "23:05",
-                    "9.00%",
-                    "5.30",
-                    new String[]{"PEPSI 2 L"},
-                    new String[]{"5.30"}
-            ),
-            new Receipt(
-                    "S.C. OMV PETROM MARKETING S.R.L.",
-                    "RO11201891",
-                    "04.08.2021",
-                    "22:02:22",
-                    "19.00%",
-                    "200.10",
-                    new String[]{"* 3 MOTORINA STANDARD"},
-                    new String[]{"200.10"}
-            ),
-            new Receipt(
-                    "SUCCES DEZVOLTARE 1991 SRL",
-                    "RO33030628",
-                    "02-12-2021",
-                    "12:08",
-                    "19%",
-                    "14.75",
-                    new String[]{"AQUATIQUE 5L APA PLATA", "FAIRY EXT PLUS LILAC"},
-                    new String[]{"5.75", "9.00"}
-            )
-    };
+    }                                                                                                                                                                                                                            private static Receipt[] Bon = {            new Receipt(                    "RYLKE PROD SRL",                    "RO 4665546",                    "21-10-2021",                    "15:45",                    "9.00%",                    "16.00",                    new String[]{"PAINE"},                    new String[]{"16.00"}            ),            new Receipt(                    "RYLKE PROD SRL",                    "RO 4665546",                    "24-09-2021",                    "23:05",                    "9.00%",                    "5.30",                    new String[]{"PEPSI 2 L"},                    new String[]{"5.30"}            ),            new Receipt(                    "S.C. OMV PETROM MARKETING S.R.L.",                    "RO11201891",                    "04.08.2021",                    "22:02:22",                    "19.00%",                    "200.10",                    new String[]{"* 3 MOTORINA STANDARD"},                    new String[]{"200.10"}            ),            new Receipt(                    "SUCCES DEZVOLTARE 1991 SRL",                    "RO33030628",                    "02-12-2021",                    "12:08",                    "19%",                    "14.75",                    new String[]{"AQUATIQUE 5L APA PLATA", "FAIRY EXT PLUS LILAC"},                    new String[]{"5.75", "9.00"}            )    };
 }
