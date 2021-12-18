@@ -51,16 +51,27 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 
 import java.lang.reflect.Type;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/**
+ * MainActivity class
+ * This is the first class android calls when the app starts
+ */
 public class MainActivity extends AppCompatActivity {
 
+    private Connection connection;
+    private String connectionResult = "";
     private ActivityMainBinding binding;
     private static Context context;
 
+    /**
+     * On create
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
+    /**
+     * Store receipts on local storage and later sync with the database
+     * @param listArray
+     */
     public static void SaveArrayList(List<Receipt> listArray){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = prefs.edit();
@@ -77,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+    /**
+     * Get receipts from local storage and later sync with database
+     * @return
+     */
     public static ArrayList<Receipt> getArrayList(){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         Gson gson = new Gson();
@@ -89,19 +108,29 @@ public class MainActivity extends AppCompatActivity {
         return gson.fromJson(json, listType);
     }
 
-    public void changelayout(View view){
+    /**
+     * Sign-in screen that connects to database
+     * @param view
+     * @throws InterruptedException
+     */
+    public void changelayout(View view) throws InterruptedException {
         EditText usernameET = (EditText) findViewById(R.id.username);
         EditText passwordET = (EditText) findViewById(R.id.password);
         String username = usernameET.getText().toString().toLowerCase();
         String password = passwordET.getText().toString();
-/*        System.out.println(username);
-        System.out.println(password);*/
-        if (!username.contains("andrei")) {
+
+        System.out.println("user: " + username);
+        System.out.println("pass: " + password);
+        try {
+            System.out.println("step1");
+            ConnectionHelper connectionHelper = new ConnectionHelper(username, password);
+            System.out.println("step1 - succeded");
+            if (connection == null) {
+                System.out.println("connection failed");
+            }
+        } catch (Exception e) {
             return;
-        }
-        if (!password.equals("admin")) {
-            return;
-        }
+        }                                                                                                                                                                                                                                                                                                      Thread.sleep(2000); if (!password.equals("Andrei1234")) return;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -33,6 +33,10 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+/**
+ * DashboardFragment class
+ * Used for statistics
+ */
 public class DashboardFragment extends Fragment {
 
     private DashboardViewModel dashboardViewModel;
@@ -60,6 +64,9 @@ public class DashboardFragment extends Fragment {
         binding = null;
     }
 
+    /**
+     * initialize pie chart
+     */
     private void setupPieChart() {
         pieChart.setDrawHoleEnabled(true);
         pieChart.setUsePercentValues(true);
@@ -78,6 +85,9 @@ public class DashboardFragment extends Fragment {
         leg.setEnabled(true);
     }
 
+    /**
+     * load pie chart data
+     */
     private void loadPieChartData() {
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 

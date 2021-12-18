@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import com.bonmanager.databinding.ReceiptViewBinding;
 
-
+/**
+ * ReceiptActivity class
+ */
 public class ReceiptActivity extends AppCompatActivity {
 
     ReceiptViewBinding binding;

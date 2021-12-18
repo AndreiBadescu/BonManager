@@ -2,6 +2,9 @@ package com.bonmanager;
 
 import java.util.Arrays;
 
+/**
+ * Receipt class that contains all core data
+ */
 public class Receipt {
     private String numeComerciant;
     private String cif;
