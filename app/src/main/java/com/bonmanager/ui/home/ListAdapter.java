@@ -30,7 +30,7 @@ public class ListAdapter extends ArrayAdapter<Receipt> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Receipt bon = getItem(position);
 
-        if (convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
         }
 

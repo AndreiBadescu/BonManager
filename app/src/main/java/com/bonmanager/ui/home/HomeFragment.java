@@ -2,9 +2,7 @@ package com.bonmanager.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,32 +10,28 @@ import android.widget.AdapterView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bonmanager.MainActivity;
-import com.bonmanager.R;
 import com.bonmanager.Receipt;
 import com.bonmanager.ReceiptActivity;
 import com.bonmanager.databinding.FragmentHomeBinding;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import org.w3c.dom.Text;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+/**
+ * HomeFragment class
+ * Used for receipts history view
+ */
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
     private TextView test;
-    private static List<Receipt> receipts = MainActivity.getArrayList();
+    private static final List<Receipt> receipts = MainActivity.getArrayList();
     private static Context context;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,21 +49,18 @@ public class HomeFragment extends Fragment {
             ListAdapter listAdapter = new ListAdapter(requireContext(), receipts);
             binding.listview.setAdapter(listAdapter);
             binding.listview.setClickable(true);
-            binding.listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Receipt bon = receipts.get(position);
-                    Intent i = new Intent(requireContext(), ReceiptActivity.class);
-                    i.putExtra("Nume comerciant", bon.getNumeComerciant());
-                    i.putExtra("Total", bon.getTotal() + " RON");
-                    i.putExtra("CIF", bon.getCif());
-                    i.putExtra("Data", bon.getData());
-                    i.putExtra("Ora", bon.getOra());
-                    i.putExtra("TVA", bon.getTva());
-                    i.putExtra("Produse", Arrays.toString(bon.getProduse()));
-                    i.putExtra("Preturi", Arrays.toString(bon.getPreturi()));
-                    startActivity(i);
-                }
+            binding.listview.setOnItemClickListener((parent, view, position, id) -> {
+                Receipt bon = receipts.get(position);
+                Intent i = new Intent(requireContext(), ReceiptActivity.class);
+                i.putExtra("Nume comerciant", bon.getNumeComerciant());
+                i.putExtra("Total", bon.getTotal() + " RON");
+                i.putExtra("CIF", bon.getCif());
+                i.putExtra("Data", bon.getData());
+                i.putExtra("Ora", bon.getOra());
+                i.putExtra("TVA", bon.getTva());
+                i.putExtra("Produse", Arrays.toString(bon.getProduse()));
+                i.putExtra("Preturi", Arrays.toString(bon.getPreturi()));
+                startActivity(i);
             });
         }
 
