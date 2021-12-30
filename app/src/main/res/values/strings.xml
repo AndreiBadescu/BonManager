@@ -13,4 +13,20 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="logo">Logo</string>
+    <string name="hint_nume">...Nume...</string>
+    <string name="hint_total">...Total...</string>
+    <string name="hint_data">...dd/mm/yyyy...</string>
+    <string name="hint_ora">...hh:mm...</string>
+    <string name="hint_tva">...TVA...</string>
+    <string name="ora">Ora</string>
+    <string name="data">Data</string>
+    <string name="cif">CIF</string>
+    <string name="total">Total</string>
+    <string name="nume_comerciant">Nume comerciant</string>
+    <string name="tva">TVA</string>
+    <string name="produse">Produse</string>
+    <string name="preturi">Preturi</string>
+    <string name="hint_produse">...Produse...</string>
+    <string name="hint_preturi">...Preturi...</string>
 </resources>

@@ -130,7 +130,9 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             return;
-        }                                                                                                                                                                                                                                                                                                      Thread.sleep(2000); if (!password.equals("Andrei1234")) return;
+        }
+        //Thread.sleep(2000);
+        //if (!password.equals("Andrei1234")) return;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

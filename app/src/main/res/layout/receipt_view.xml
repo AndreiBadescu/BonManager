@@ -12,7 +12,88 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:src="@drawable/receipt_icon"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/logo" />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/receipt_delete_btn"
+        android:maxWidth="45dp"
+        android:maxHeight="45dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/delete_btn"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/receipt_edit_btn"
+        android:maxWidth="40dp"
+        android:maxHeight="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/edit_btn"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/receipt_discard_btn"
+        android:maxWidth="45dp"
+        android:maxHeight="45dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/close_btn"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"
+        android:visibility="gone" />
+
+    <ImageButton
+        android:background="@android:color/transparent"
+        android:id="@+id/receipt_save_btn"
+        android:maxWidth="45dp"
+        android:maxHeight="45dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="80dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/save_icon"
+        android:backgroundTintMode="screen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_image"
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/nume_comerciant_view_item"
@@ -33,21 +114,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nume comerciant"
+                android:text="@string/nume_comerciant"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/nume_comerciant_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RYLKE"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/hint_nume"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
     </RelativeLayout>
-
 
     <RelativeLayout
         android:id="@+id/total_view_item"
@@ -55,7 +142,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/nume_comerciant_view_item"
         android:paddingVertical="5dp">
-
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -66,16 +152,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total"
+                android:text="@string/total"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/total_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0 RON"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/hint_total"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
@@ -100,17 +193,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CIF"
+                android:text="@string/cif"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/cif_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="RO 0000"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
-
+                android:textColor="@color/black"
+                android:hint="RO..."
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
@@ -135,17 +234,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Data"
+                android:text="@string/data"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/data_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24/07/2021"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
-
+                android:textColor="@color/black"
+                android:hint="@string/hint_data"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
@@ -155,32 +260,38 @@
         android:id="@+id/ora_view_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/data_view_item"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_below="@id/data_view_item"
         android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
+            android:layout_marginStart="70dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ora"
-                android:textSize="15sp"/>
+                android:text="@string/ora"
+                android:textSize="15sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/ora_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10:30"
+                android:text=""
+                android:textColor="@color/black"
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
-
+                android:hint="@string/hint_ora"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
@@ -205,16 +316,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TVA"
+                android:text="@string/tva"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/tva_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="19%"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:hint="@string/hint_tva"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="19%, 9%, 5%" />
 
 
         </LinearLayout>
@@ -240,17 +358,23 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Produse"
+                android:text="@string/produse"
                 android:textSize="15sp"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/produse_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idk"
+                android:text=""
                 android:textSize="22sp"
-                android:textColor="@color/black"/>
-
+                android:textColor="@color/black"
+                android:hint="@string/hint_produse"
+                android:inputType="none"
+                android:enabled="false"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="@null"
+                android:autofillHints="no" />
 
         </LinearLayout>
 
@@ -260,32 +384,38 @@
         android:id="@+id/preturi_view_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/produse_view_item"
+        android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:background="?attr/selectableItemBackground"
-        android:layout_below="@id/produse_view_item"
         android:paddingVertical="5dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginStart="70dp">
+            android:layout_marginStart="70dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Preturi"
-                android:textSize="15sp"/>
+                android:text="@string/preturi"
+                android:textSize="15sp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/preturi_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Idk"
-                android:textSize="22sp"
-                android:textColor="@color/black"/>
-
+                android:autofillHints="no"
+                android:background="@null"
+                android:clickable="false"
+                android:enabled="false"
+                android:focusable="false"
+                android:hint="@string/hint_preturi"
+                android:inputType="none"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="22sp" />
 
         </LinearLayout>
 
