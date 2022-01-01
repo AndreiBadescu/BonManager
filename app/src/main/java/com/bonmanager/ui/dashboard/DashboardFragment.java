@@ -1,16 +1,16 @@
 package com.bonmanager.ui.dashboard;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bonmanager.R;
@@ -25,13 +25,16 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.MaterialDatePicker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.TimeZone;
 
 /**
  * DashboardFragment class
@@ -54,6 +57,34 @@ public class DashboardFragment extends Fragment {
         pieChart = root.findViewById(R.id.activity_main_piechart);
         setupPieChart();
         loadPieChartData();
+
+        Button filters_btn = root.findViewById(R.id.filters_button);
+        Button date_range_btn = root.findViewById(R.id.date_range_button);
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
+        calendar.clear();
+
+        long today = MaterialDatePicker.todayInUtcMilliseconds();
+        calendar.setTimeInMillis(today);
+
+        CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
+
+        //MaterialDatePicker
+        final MaterialDatePicker<Pair<Long,Long>> dataPicker = MaterialDatePicker.Builder.dateRangePicker()
+                .setTitleText("Select dates")
+                .setSelection(new Pair<>(
+                        MaterialDatePicker.todayInUtcMilliseconds(),
+                        MaterialDatePicker.todayInUtcMilliseconds()))
+                .setCalendarConstraints(constraintBuilder.build())
+                .build();
+
+        date_range_btn.setOnClickListener(v -> {
+            dataPicker.show(getChildFragmentManager(), "DATE_PICKER");
+        });
+
+        filters_btn.setOnClickListener((view) -> {
+
+        });
 
         return root;
     }
@@ -88,10 +119,11 @@ public class DashboardFragment extends Fragment {
     /**
      * load pie chart data
      */
+    @SuppressLint("DefaultLocale")
     private void loadPieChartData() {
         ArrayList<PieEntry> entries = new ArrayList<PieEntry>();
 
-        Set<String> carne = new HashSet<String>(Arrays.asList(
+        final Set<String> carne = new HashSet<String>(Arrays.asList(
                 "pui",
                 "porc",
                 "vita",
@@ -109,7 +141,7 @@ public class DashboardFragment extends Fragment {
                 "ceafa",
                 "piept"));
 
-        Set<String> legume = new HashSet<String>(Arrays.asList(
+        final Set<String> legume = new HashSet<String>(Arrays.asList(
                 "spanac",
                 "morcov",
                 "rosii",
@@ -132,7 +164,7 @@ public class DashboardFragment extends Fragment {
                 "ceapa",
                 "sfecla"));
 
-        Set<String> sucuri = new HashSet<String>(Arrays.asList(
+        final Set<String> sucuri = new HashSet<String>(Arrays.asList(
                 "pepsi",
                 "cola",
                 "fanta",
@@ -160,7 +192,7 @@ public class DashboardFragment extends Fragment {
                 "bere",
                 "apa"));
 
-        Set<String> lactate = new HashSet<String>(Arrays.asList(
+        final Set<String> lactate = new HashSet<String>(Arrays.asList(
                 "cascaval",
                 "lapte",
                 "branza",
@@ -174,14 +206,14 @@ public class DashboardFragment extends Fragment {
                 "mozzarella",
                 "unt"));
 
-        Set<String> paine = new HashSet<String>(Arrays.asList(
+        final Set<String> paine = new HashSet<String>(Arrays.asList(
                 "paine",
                 "bagheta",
                 "lipie",
                 "chifla",
                 "painica"));
 
-        Set<String> combustibil = new HashSet<String>(Arrays.asList(
+        final Set<String> combustibil = new HashSet<String>(Arrays.asList(
                 "benzina",
                 "motorina",
                 "gpl"));
@@ -270,7 +302,7 @@ public class DashboardFragment extends Fragment {
             colors.add(color);
         }
 
-        PieDataSet dataSet = new PieDataSet(entries, "Categories");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         dataSet.setColors(colors);
 
         PieData data = new PieData(dataSet);

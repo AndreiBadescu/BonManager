@@ -1,5 +1,6 @@
 package com.bonmanager.ui.notifications;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -33,7 +34,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.bonmanager.R;
 import com.bonmanager.Receipt;
-import com.bonmanager.databinding.FragmentNotificationsBinding;
+import com.bonmanager.databinding.FragmentNewReceiptBinding;
 import com.bonmanager.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,7 +52,7 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 public class NewReceiptFragment extends Fragment {
 
     private NewReceiptViewModel newReceiptViewModel;
-    private FragmentNotificationsBinding binding;
+    private FragmentNewReceiptBinding binding;
     private ImageButton addImageButton;
     private ImageButton selectImageFromGalleyButton;
     private ImageView receiptImage;
@@ -67,7 +68,7 @@ public class NewReceiptFragment extends Fragment {
         newReceiptViewModel =
                 new ViewModelProvider(this).get(NewReceiptViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentNewReceiptBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         receiptImage = (ImageView) root.findViewById(R.id.image);
@@ -102,7 +103,6 @@ public class NewReceiptFragment extends Fragment {
     }
 
     private void dispatchTakePictureIntent() {
-        // in the method we are displaying an intent to capture our image.
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         // on below line we are calling a start activity
@@ -170,13 +170,8 @@ public class NewReceiptFragment extends Fragment {
                     }
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(requireActivity(), "Failed to detect text from image: " + e.getMessage(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+        }).addOnFailureListener(e -> Toast.makeText(requireActivity(), "Failed to detect text from image: " + e.getMessage(),
+                Toast.LENGTH_SHORT).show());
     }
 
     private String trimFileName(String fileName) {
@@ -198,7 +193,7 @@ public class NewReceiptFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode != requireActivity().RESULT_OK) { return; }
+        if (resultCode != Activity.RESULT_OK) { return; }
         // calling on activity result method.
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             // on below line we are getting

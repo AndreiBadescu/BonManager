@@ -1,6 +1,7 @@
 package com.bonmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,6 +22,8 @@ import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicConvolve3x3;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,12 +32,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bonmanager.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -64,24 +69,58 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
 
     private Connection connection;
-    private String connectionResult = "";
-    private ActivityMainBinding binding;
+    private final String connectionResult = "";
     private static Context context;
+    private static boolean loginScreen = true;
+    private ActivityMainBinding binding;
 
     /**
      * On create
-     * @param savedInstanceState
+     * @param savedInstanceState saved instance
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MainActivity.this;
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_login);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.action_bar_logout, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout_button) {
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        if (loginScreen) {
+                            finish();
+                        }
+                        Objects.requireNonNull(getSupportActionBar()).setTitle("Bon Manager");
+                        setContentView(R.layout.activity_login);
+                        loginScreen = true;
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        break;
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Are you sure you want to logout ?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
      * Store receipts on local storage and later sync with the database
-     * @param listArray
+     * @param listArray list array
      */
     public static void SaveArrayList(List<Receipt> listArray){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -116,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     public void changelayout(View view) throws InterruptedException {
         EditText usernameET = (EditText) findViewById(R.id.username);
         EditText passwordET = (EditText) findViewById(R.id.password);
-        String username = usernameET.getText().toString().toLowerCase();
+        String username = usernameET.getText().toString();
         String password = passwordET.getText().toString();
 
         System.out.println("user: " + username);
@@ -134,17 +173,15 @@ public class MainActivity extends AppCompatActivity {
         //Thread.sleep(2000);
         //if (!password.equals("Andrei1234")) return;
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration
+                .Builder(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        loginScreen = false;
     }
 }

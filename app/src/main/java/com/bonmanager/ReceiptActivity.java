@@ -37,14 +37,14 @@ public class ReceiptActivity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
         if (intent != null) {
-            String numeComerciant = intent.getStringExtra("Nume comerciant");
-            String total = intent.getStringExtra("Total");
-            String cif = intent.getStringExtra("CIF");
-            String data = intent.getStringExtra("Data");
-            String ora = intent.getStringExtra("Ora");
-            String tva = intent.getStringExtra("TVA");
-            String produse = intent.getStringExtra("Produse");
-            String preturi = intent.getStringExtra("Preturi");
+            final String numeComerciant = intent.getStringExtra("Nume comerciant");
+            final String total = intent.getStringExtra("Total");
+            final String cif = intent.getStringExtra("CIF");
+            final String data = intent.getStringExtra("Data");
+            final String ora = intent.getStringExtra("Ora");
+            final String tva = intent.getStringExtra("TVA");
+            final String produse = intent.getStringExtra("Produse");
+            final String preturi = intent.getStringExtra("Preturi");
             final int index = intent.getIntExtra("Index", -1);
 
             EditText numeComerciantText = root_view.findViewById(R.id.nume_comerciant_view);
@@ -128,7 +128,7 @@ public class ReceiptActivity extends AppCompatActivity {
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
+                            switch (which) {
                                 case DialogInterface.BUTTON_POSITIVE:
                                     delete_btn.setVisibility(View.VISIBLE);
                                     edit_btn.setVisibility(View.VISIBLE);

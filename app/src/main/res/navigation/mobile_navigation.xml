@@ -20,6 +20,6 @@
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.bonmanager.ui.notifications.NewReceiptFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:label="@string/add_receipt"
+        tools:layout="@layout/fragment_new_receipt" />
 </navigation>
