@@ -195,7 +195,7 @@ public class DashboardFragment extends Fragment {
         float totalCombustibil = 0.0f;
         float totalOthers = 0.0f;
         for (Receipt bon: HomeFragment.getReceipts()) {
-            totalAll += Float.parseFloat(bon.getTotal());
+            totalAll += Float.parseFloat(bon.getTotalWithoutCurrency());
             int cnt = 0;
             for (String produs: bon.getProduse()) {
                 StringTokenizer defaultTokenizer = new StringTokenizer(produs);

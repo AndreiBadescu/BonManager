@@ -1,6 +1,9 @@
 package com.bonmanager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Receipt class that contains all core data
@@ -86,6 +89,27 @@ public class Receipt {
         return total;
     }
 
+    public String getTotalWithoutCurrency() {
+        int lastIndex = total.length();
+        boolean first = true;
+        StringBuilder number = new StringBuilder();
+        for (int i = 0; i < total.length(); ++i) {
+            if (Character.isDigit(total.charAt(i))) {
+                number.append(total.charAt(i));
+            } else if (total.charAt(i) == '.') {
+                if (!first) {
+                    break;
+                }
+                number.append(total.charAt(i));
+                first = false;
+            }
+        }
+        if (first) {
+            number.append(".00");
+        }
+        return number.toString();
+    }
+
     public void setTotal(String total) {
         this.total = total;
     }
@@ -124,6 +148,30 @@ public class Receipt {
         this.produse = produse;
         this.preturi = preturi;
         this.id = last_id++;
-        System.out.println(last_id);
+//        System.out.println(last_id);
+    }
+
+    public Receipt(String numeComerciant, String cif, String data, String ora, String tva, String total, String produse, String preturi) {
+        this.numeComerciant = numeComerciant;
+        this.cif = cif;
+        this.data = data;
+        this.ora = ora;
+        this.tva = tva;
+        this.total = total;
+        this.id = last_id++;
+
+        List<String> listOfProduse = new ArrayList<>();
+        StringTokenizer tokenizerProduse = new StringTokenizer(produse, "[],");
+        while (tokenizerProduse.hasMoreTokens()) {
+            listOfProduse.add(tokenizerProduse.nextToken().trim());
+        }
+        this.produse = listOfProduse.toArray(new String[0]);
+
+        List<String> listOfPreturi = new ArrayList<>();
+        StringTokenizer tokenizerPreturi = new StringTokenizer(preturi, "[],");
+        while (tokenizerPreturi.hasMoreTokens()) {
+            listOfPreturi.add(tokenizerPreturi.nextToken().trim());
+        }
+        this.preturi = listOfPreturi.toArray(new String[0]);
     }
 }

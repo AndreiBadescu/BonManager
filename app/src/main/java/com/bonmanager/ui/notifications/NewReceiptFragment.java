@@ -48,9 +48,9 @@ import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
  * DashboardFragment class
  * Used for New Receipt
  */
-public class NotificationsFragment extends Fragment {
+public class NewReceiptFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private NewReceiptViewModel newReceiptViewModel;
     private FragmentNotificationsBinding binding;
     private ImageButton addImageButton;
     private ImageButton selectImageFromGalleyButton;
@@ -64,8 +64,8 @@ public class NotificationsFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        newReceiptViewModel =
+                new ViewModelProvider(this).get(NewReceiptViewModel.class);
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -278,8 +278,49 @@ public class NotificationsFragment extends Fragment {
     private void showResult(String id) {
         resultTV.setVisibility(View.VISIBLE);
         resultTV.setText(Bon[Integer.parseInt(id)].toString2());
-        HomeFragment.AddReceipt(Bon[Integer.parseInt(id)]);
+        HomeFragment.addReceipt(Bon[Integer.parseInt(id)]);
     }
 
-    static Receipt[] Bon;
+    private static final Receipt[] Bon = {
+            new Receipt(
+                    "RYLKE PROD SRL",
+                    "RO 4665546",
+                    "21-10-2021",
+                    "15:45",
+                    "9.00%",
+                    "16.00 RON",
+                    new String[]{"PAINE"},
+                    new String[]{"16.00"}
+            ),
+            new Receipt(
+                    "RYLKE PROD SRL",
+                    "RO 4665546",
+                    "24-09-2021",
+                    "23:05",
+                    "9.00%",
+                    "5.30 RON",
+                    new String[]{"PEPSI 2 L"},
+                    new String[]{"5.30"}
+            ),
+            new Receipt(
+                    "S.C. OMV PETROM MARKETING S.R.L.",
+                    "RO11201891",
+                    "04.08.2021",
+                    "22:02:22",
+                    "19.00%",
+                    "200.10 RON",
+                    new String[]{"* 3 MOTORINA STANDARD"},
+                    new String[]{"200.10"}
+            ),
+            new Receipt(
+                    "SUCCES DEZVOLTARE 1991 SRL",
+                    "RO33030628",
+                    "02-12-2021",
+                    "12:08",
+                    "19%",
+                    "14.75 RON",
+                    new String[]{"AQUATIQUE 5L APA PLATA", "FAIRY EXT PLUS LILAC"},
+                    new String[]{"5.75", "9.00"}
+            )
+    };
 }

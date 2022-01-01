@@ -1,15 +1,16 @@
 package com.bonmanager.ui.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,12 +28,12 @@ import java.util.List;
  */
 
 public class HomeFragment extends Fragment {
-
     private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
-    private TextView test;
+    private static FragmentHomeBinding binding;
     private static final List<Receipt> receipts = MainActivity.getArrayList();
+    public static Receipt newReceipt;
     private static Context context;
+    private static Activity activity;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,26 +43,10 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         context = requireContext();
+        activity = getActivity();
 
-/*        test = (TextView) root.findViewById(R.id.text_home);*/
         if (!receipts.isEmpty()) {
-            //test.setText(receipts.toString());
-            ListAdapter listAdapter = new ListAdapter(requireContext(), receipts);
-            binding.listview.setAdapter(listAdapter);
-            binding.listview.setClickable(true);
-            binding.listview.setOnItemClickListener((parent, view, position, id) -> {
-                Receipt bon = receipts.get(position);
-                Intent i = new Intent(requireContext(), ReceiptActivity.class);
-                i.putExtra("Nume comerciant", bon.getNumeComerciant());
-                i.putExtra("Total", bon.getTotal() + " RON");
-                i.putExtra("CIF", bon.getCif());
-                i.putExtra("Data", bon.getData());
-                i.putExtra("Ora", bon.getOra());
-                i.putExtra("TVA", bon.getTva());
-                i.putExtra("Produse", Arrays.toString(bon.getProduse()));
-                i.putExtra("Preturi", Arrays.toString(bon.getPreturi()));
-                startActivity(i);
-            });
+            updateListOfReceipts();
         }
 
         return root;
@@ -73,8 +58,42 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    public static void AddReceipt(Receipt bon) {
+    public static void updateListOfReceipts() {
+        ListAdapter listAdapter = new ListAdapter(context, receipts);
+        binding.listview.setAdapter(listAdapter);
+        binding.listview.setClickable(true);
+        binding.listview.setOnItemClickListener((parent, view, position, id) -> {
+            Receipt bon = receipts.get(position);
+            Intent i = new Intent(context, ReceiptActivity.class);
+            i.putExtra("Nume comerciant", bon.getNumeComerciant());
+            i.putExtra("Total", bon.getTotal());
+            i.putExtra("CIF", bon.getCif());
+            i.putExtra("Data", bon.getData());
+            i.putExtra("Ora", bon.getOra());
+            i.putExtra("TVA", bon.getTva());
+            i.putExtra("Produse", Arrays.toString(bon.getProduse()));
+            i.putExtra("Preturi", Arrays.toString(bon.getPreturi()));
+            i.putExtra("Index", position);
+            activity.startActivity(i);
+        });
+    }
+
+    public static void addReceipt(Receipt bon) {
         receipts.add(bon);
+        MainActivity.SaveArrayList(receipts);
+    }
+
+    public static void changeReceipt(Receipt newReceipt, final int index) {
+        if (index < 0 || index >= receipts.size())
+            return;
+        receipts.set(index, newReceipt);
+        MainActivity.SaveArrayList(receipts);
+    }
+
+    public static void deleteReceipt(final int index) {
+        if (index < 0 || index >= receipts.size())
+            return;
+        receipts.remove(index);
         MainActivity.SaveArrayList(receipts);
     }
 

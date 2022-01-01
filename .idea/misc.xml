@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/drawable/cell_shape.xml" value="0.3828125" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3828125" />
@@ -20,7 +21,9 @@
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/list_item.xml" value="0.1" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/listview.xml" value="0.1" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/listview_home.xml" value="0.2971014492753623" />
+        <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/products_table.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/receipt_view.xml" value="0.33" />
+        <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/layout/table_row_products.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20572916666666666" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/menu/select_filter.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Andrei/AndroidStudioProjects/BonManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22135416666666666" />

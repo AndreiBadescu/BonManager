@@ -25,8 +25,11 @@
     <string name="total">Total</string>
     <string name="nume_comerciant">Nume comerciant</string>
     <string name="tva">TVA</string>
-    <string name="produse">Produse</string>
+    <string name="produse_tabel">Products</string>
     <string name="preturi">Preturi</string>
     <string name="hint_produse">...Produse...</string>
     <string name="hint_preturi">...Preturi...</string>
+    <string name="pret_total">Price</string>
+    <string name="cantitate">Quantity</string>
+    <string name="produse">Produse</string>
 </resources>

@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BonManager">
         <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES" android:value="ocr"/>
-        <activity android:name=".ReceiptActivity"></activity>
+
+        <activity android:name=".ReceiptActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

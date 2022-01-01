@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +13,6 @@ import androidx.annotation.Nullable;
 import com.bonmanager.R;
 import com.bonmanager.Receipt;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListAdapter extends ArrayAdapter<Receipt> {
@@ -31,7 +27,7 @@ public class ListAdapter extends ArrayAdapter<Receipt> {
         Receipt bon = getItem(position);
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item,parent,false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
         }
 
 /*        ImageView imageView = convertView.findViewById(R.id.profile_pic);*/

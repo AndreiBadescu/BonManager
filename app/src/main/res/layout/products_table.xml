@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stretchColumns="*"
+        android:id="@+id/products_table">
+
+        <TableRow>
+            <TextView
+                android:text="@string/produse_tabel"
+                android:paddingHorizontal="3dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <TextView
+                android:text="@string/cantitate"
+                android:paddingHorizontal="3dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <TextView
+                android:text="@string/pret_total"
+                android:paddingHorizontal="3dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:text="AAAAAA"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textSize="14sp"/>
+            <TextView
+                android:text="AAAAAAAAA"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textSize="14sp"/>
+            <TextView
+                android:text="AAAAAA"
+                android:paddingHorizontal="0dp"
+                android:paddingVertical="10dp"
+                android:gravity="center"
+                android:background="@drawable/cell_shape"
+                android:textSize="14sp"/>
+        </TableRow>
+
+    </TableLayout>
