@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(listArray);
-        editor.putString("TAG_LIST", json);  ///"TAG_LIST" is a key must same for getting data
+        editor.putString("TAG_LIST", json);
         editor.apply();
     }
 

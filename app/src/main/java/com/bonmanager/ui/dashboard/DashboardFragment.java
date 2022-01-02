@@ -27,6 +27,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,11 +46,11 @@ public class DashboardFragment extends Fragment {
     private DashboardViewModel dashboardViewModel;
     private FragmentDashboardBinding binding;
     private PieChart pieChart;
+    private Pair<Long, Long> timeRange;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        dashboardViewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -77,6 +78,11 @@ public class DashboardFragment extends Fragment {
                         MaterialDatePicker.todayInUtcMilliseconds()))
                 .setCalendarConstraints(constraintBuilder.build())
                 .build();
+
+        dataPicker.addOnPositiveButtonClickListener(selection -> {
+            timeRange = selection;
+            System.out.println(selection);
+        });
 
         date_range_btn.setOnClickListener(v -> {
             dataPicker.show(getChildFragmentManager(), "DATE_PICKER");

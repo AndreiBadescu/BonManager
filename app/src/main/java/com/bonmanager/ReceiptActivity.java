@@ -178,6 +178,7 @@ public class ReceiptActivity extends AppCompatActivity {
                             tvaText.getText().toString().charAt(tvaText.getText().toString().length() - 1) != '%') {
                         tvaText.setText(tvaText.getText().toString() + "%");
                     }
+                    dataText.setText(Receipt.standardizeDate(dataText.getText().toString()));
 
                     delete_btn.setVisibility(View.VISIBLE);
                     edit_btn.setVisibility(View.VISIBLE);
@@ -201,19 +202,16 @@ public class ReceiptActivity extends AppCompatActivity {
             });
 
             delete_btn.setOnClickListener((view) -> {
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                HomeFragment.deleteReceipt(index);
-                                HomeFragment.updateListOfReceipts();
-                                finish();
-                                break;
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            HomeFragment.deleteReceipt(index);
+                            HomeFragment.updateListOfReceipts();
+                            finish();
+                            break;
 
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                        }
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
                     }
                 };
 

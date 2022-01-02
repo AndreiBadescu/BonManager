@@ -30,15 +30,13 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private static FragmentHomeBinding binding;
-    private static final List<Receipt> receipts = MainActivity.getArrayList();
-    public static Receipt newReceipt;
     private static Context context;
     private static Activity activity;
+    private static final List<Receipt> receipts = MainActivity.getArrayList();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();

@@ -66,7 +66,7 @@ public class Receipt {
     }
 
     public void setData(String data) {
-        this.data = data;
+        this.data = standardizeDate(data);
     }
 
     public String getOra() {
@@ -138,10 +138,22 @@ public class Receipt {
         this.id = id;
     }
 
+    public static String standardizeDate(String data) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < data.length(); ++i) {
+            if (Character.isDigit(data.charAt(i))) {
+                builder.append(data.charAt(i));
+            } else {
+                builder.append('/');
+            }
+        }
+        return builder.toString();
+    }
+
     public Receipt(String numeComerciant, String cif, String data, String ora, String tva, String total, String[] produse, String[] preturi) {
         this.numeComerciant = numeComerciant;
         this.cif = cif;
-        this.data = data;
+        this.data = standardizeDate(data);
         this.ora = ora;
         this.tva = tva;
         this.total = total;
@@ -154,7 +166,7 @@ public class Receipt {
     public Receipt(String numeComerciant, String cif, String data, String ora, String tva, String total, String produse, String preturi) {
         this.numeComerciant = numeComerciant;
         this.cif = cif;
-        this.data = data;
+        this.data = standardizeDate(data);
         this.ora = ora;
         this.tva = tva;
         this.total = total;
